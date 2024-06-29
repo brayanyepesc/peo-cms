@@ -35,4 +35,9 @@ class ClientRepository implements ClientInterface
         return $this->client->where('id', $id)->delete();
     }
 
+    public function getClientByEmail($email)
+    {
+        return $this->client->where('email', $email)->first();
+    }
+
 }
