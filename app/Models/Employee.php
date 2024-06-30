@@ -24,6 +24,7 @@ class Employee extends Authenticatable
         'contact',
         'payment_type',
         'payment_amount',
+        'client_email'
     ];
     public $timestamps = false;
 
