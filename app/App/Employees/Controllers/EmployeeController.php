@@ -2,6 +2,7 @@
 
 namespace App\App\Employees\Controllers;
 
+use App\App\Clients\Repositories\ClientRepository;
 use App\App\Employees\Repositories\EmployeeRepository;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
@@ -10,16 +11,18 @@ use Illuminate\Http\Request;
 class EmployeeController extends Controller
 {
     protected $employeeRepository;
+    protected $clientRepository;
 
-    public function __construct(EmployeeRepository $employeeRepository)
+    public function __construct(EmployeeRepository $employeeRepository, ClientRepository $clientRepository)
     {
         $this->employeeRepository = $employeeRepository;
+        $this->clientRepository = $clientRepository;
     }
 
-    public function index($client_id)
+    public function index($client_email)
     {
         try {
-            $employees = $this->employeeRepository->getAllEmployees($client_id);
+            $employees = $this->clientRepository->getClientByEmail($client_email)->employees;
             return response()->json([
                 'message' => 'Employees retrieved',
                 'data' => $employees,
