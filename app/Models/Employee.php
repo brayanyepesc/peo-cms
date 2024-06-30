@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Client extends Authenticatable
+class Employee extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -15,30 +15,26 @@ class Client extends Authenticatable
      *
      * @var string[]
      */
-    protected $table = 'clients';
+    protected $table = 'employees';
 
     protected $fillable = [
-        'b_name',
+        'client_id',
+        'names',
         'email',
-        'password',
-        'pay_period',
         'contact',
-        'website',
+        'payment_type',
+        'payment_amount',
     ];
     public $timestamps = false;
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-    ];
-
-    public function employees()
+    public function client()
     {
-        return $this->hasMany(Employee::class);
+        return $this->belongsTo(Client::class);
+    }
+
+    public function employeesAccordinToClient($client_id)
+    {
+        return $this->where('client_id', $client_id);
     }
 
 }
